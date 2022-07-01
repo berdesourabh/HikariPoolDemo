@@ -1,4 +1,4 @@
-package org.example;
+package org.hikari;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
@@ -8,13 +8,13 @@ import java.sql.SQLException;
 
 public class DataSource {
 
-    private static HikariConfig config = new HikariConfig();
+    private static final HikariConfig config = new HikariConfig();
     private static HikariDataSource ds;
 
     static {
-        config.setJdbcUrl("jdbc_url");
-        config.setUsername("database_username");
-        config.setPassword("database_password");
+        config.setJdbcUrl("jdbc:postgresql://localhost:5432/postgres");
+        config.setUsername("postgres");
+        config.setPassword("password");
         config.addDataSourceProperty("cachePrepStmts", "true");
         config.addDataSourceProperty("prepStmtCacheSize", "250");
         config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");

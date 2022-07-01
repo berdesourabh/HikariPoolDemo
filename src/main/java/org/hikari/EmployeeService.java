@@ -1,5 +1,6 @@
-package org.example;
+package org.hikari;
 
+import com.zaxxer.hikari.HikariConfig;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,12 +15,12 @@ import java.util.List;
 public class EmployeeService {
 
     public List<Employee> fetchData() throws SQLException {
+
         String SQL_QUERY = "select * from emp";
-        List
-                <Employee> employees = null;
+        List<Employee> employees;
         try (Connection con = DataSource.getConnection();
              PreparedStatement pst = con.prepareStatement(SQL_QUERY);
-             ResultSet rs = pst.executeQuery();) {
+             ResultSet rs = pst.executeQuery()) {
             employees = new ArrayList<>();
             Employee employee;
             while (rs.next()) {
@@ -34,6 +35,8 @@ public class EmployeeService {
                 employee.setDeptno(rs.getInt("deptno"));
                 employees.add(employee);
             }
+        } catch (SQLException sqlException) {
+            throw new SQLException(sqlException.getMessage());
         }
         return employees;
     }
